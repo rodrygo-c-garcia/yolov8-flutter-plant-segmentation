@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class YoloImageV8Seg extends StatefulWidget {
   final FlutterVision vision;
@@ -102,6 +103,12 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> {
     final image = await decodeImageFromList(byte);
     imageHeight = image.height;
     imageWidth = image.width;
+    //cargando
+    // Muestra el loading con el indicador de tipo cubeGrid
+    EasyLoading.show(
+      status: 'Identificando Planta...',
+    );
+
     final result = await widget.vision.yoloOnImage(
         bytesList: byte,
         imageHeight: image.height,
@@ -110,10 +117,16 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> {
         confThreshold: 0.4,
         classThreshold: 0.5);
     if (result.isNotEmpty) {
+      EasyLoading.showSuccess('Identificado!');
       setState(() {
         yoloResults = result;
       });
+    } else {
+      // Muestra un mensaje de error si el resultado está vacío
+      EasyLoading.showError('No se pudo detectar nada.');
     }
+    // Oculta el loading después de llamar al método setState
+    EasyLoading.dismiss();
   }
 
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {

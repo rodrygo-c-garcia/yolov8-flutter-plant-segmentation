@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 // Captura de una imagen de la camara y segmentacion
 class YoloCaptureV8Seg extends StatefulWidget {
@@ -103,6 +104,9 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
     final image = await decodeImageFromList(byte);
     imageHeight = image.height;
     imageWidth = image.width;
+    EasyLoading.show(
+      status: 'Identificando Planta...',
+    );
     final result = await widget.vision.yoloOnImage(
         bytesList: byte,
         imageHeight: image.height,
@@ -111,10 +115,16 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
         confThreshold: 0.4,
         classThreshold: 0.5);
     if (result.isNotEmpty) {
+      EasyLoading.showSuccess('Identificado!');
       setState(() {
         yoloResults = result;
       });
+    } else {
+      // Muestra un mensaje de error si el resultado está vacío
+      EasyLoading.showError('No se pudo detectar nada.');
     }
+    // Oculta el loading después de llamar al método setState
+    EasyLoading.dismiss();
   }
 
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
