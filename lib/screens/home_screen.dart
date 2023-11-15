@@ -3,6 +3,9 @@ import 'package:flutter_vision/flutter_vision.dart';
 import '../models/yolo_video.dart';
 import '../models/yolo_image_v8seg.dart';
 import '../models/yolo_capture_v8seg.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'dart:async';
 
 enum Options { none, imagev8seg, capturev8seg, frame }
 
@@ -15,12 +18,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late FlutterVision vision;
+  Timer? _timer;
 
   Options option = Options.none;
   @override
   void initState() {
     super.initState();
     vision = FlutterVision();
+    // incializamos el loading
+    EasyLoading.addStatusCallback((status) {
+      debugPrint('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
+    EasyLoading.showSuccess('Use in initState');
+    // EasyLoading.removeCallbacks();
   }
 
   @override
