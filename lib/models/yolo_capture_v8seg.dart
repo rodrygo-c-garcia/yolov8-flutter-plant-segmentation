@@ -99,14 +99,15 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
   }
 
   yoloOnImage() async {
+    EasyLoading.show(
+      status: 'Identificando Planta...',
+    );
+
     yoloResults.clear();
     Uint8List byte = await imageFile!.readAsBytes();
     final image = await decodeImageFromList(byte);
     imageHeight = image.height;
     imageWidth = image.width;
-    EasyLoading.show(
-      status: 'Identificando Planta...',
-    );
     final result = await widget.vision.yoloOnImage(
         bytesList: byte,
         imageHeight: image.height,

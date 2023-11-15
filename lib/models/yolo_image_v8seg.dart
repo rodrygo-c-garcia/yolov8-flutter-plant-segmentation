@@ -98,17 +98,17 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> {
   }
 
   yoloOnImage() async {
-    yoloResults.clear();
-    Uint8List byte = await imageFile!.readAsBytes();
-    final image = await decodeImageFromList(byte);
-    imageHeight = image.height;
-    imageWidth = image.width;
     //cargando
     // Muestra el loading con el indicador de tipo cubeGrid
     EasyLoading.show(
       status: 'Identificando Planta...',
     );
 
+    yoloResults.clear();
+    Uint8List byte = await imageFile!.readAsBytes();
+    final image = await decodeImageFromList(byte);
+    imageHeight = image.height;
+    imageWidth = image.width;
     final result = await widget.vision.yoloOnImage(
         bytesList: byte,
         imageHeight: image.height,
