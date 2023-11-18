@@ -4,7 +4,7 @@ import '../models/yolo_video.dart';
 import '../models/yolo_image_v8seg.dart';
 import '../models/yolo_capture_v8seg.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'capture_ailment.dart';
 import 'dart:async';
 
 enum Options { none, imagev8seg, capturev8seg, frame }
@@ -100,7 +100,8 @@ class _MyAppState extends State<MyApp> {
 
   Widget task(Options option) {
     if (option == Options.frame) {
-      return YoloVideo(vision: vision);
+      //return YoloVideo(vision: vision);
+      return const CaptureAilment();
     }
     if (option == Options.imagev8seg) {
       return YoloImageV8Seg(vision: vision);
