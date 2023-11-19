@@ -65,101 +65,145 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '¿Qué dolencia tienes?',
-              style: TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: controller,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Escribe tu dolencia aquí',
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Obtener la dolencia del campo de texto
-                final dolencia = controller.text;
-                // Buscar la planta que corresponde a la dolencia
-                final plantaDescripcion = buscarPlanta(dolencia, service.lista);
-                if (plantaDescripcion == null) {
-                  planta = "No se encontró ninguna planta para tu dolencia";
-                  descripcion = "";
-                } else {
-                  final partes = plantaDescripcion.split("-");
-                  planta = partes[0];
-                  descripcion = partes[1];
-                }
-                // Actualizar el estado con la planta
-                setState(() {
-                  service.planta = planta;
-                  service.descripcion = descripcion;
-                });
-                // Verificar si la descripción es vacía o no
-                if (descripcion != "") {
-                  // Mostrar una ventana emergente con un mensaje
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Redirección"),
-                        content:
-                            const Text("Serás redirigido a la nueva ventana"),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              // Navegar a la clase YoloV8Seg y pasar los valores de servicio.planta y service.descripcion
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => YoloVideo(
-                                          planta: service.planta,
-                                          descripcion: service.descripcion,
-                                          vision: vision)));
-                            },
-                            child: const Text("Aceptar"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Cerrar la ventana emergente
-                              Navigator.pop(context);
-                            },
-                            child: const Text("Cancelar"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: const Text('Buscar planta'),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'La planta que te recomiendo es:',
-              style: TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              service.planta,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  service.descripcion,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.normal),
+      body: Container(
+        // Aquí agregas el widget Container
+        color: Colors.white10,
+        child: Center(
+          child: Padding(
+            // Aquí agregas el widget Padding
+            padding: const EdgeInsets.all(20), // valor del padding
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  '¿Qué dolencia tienes?',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Helvetica",
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: controller,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Escribe tu dolencia aquí',
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Obtener la dolencia del campo de texto
+                    final dolencia = controller.text;
+                    // Buscar la planta que corresponde a la dolencia
+                    final plantaDescripcion =
+                        buscarPlanta(dolencia, service.lista);
+                    if (plantaDescripcion == null) {
+                      planta = "No se encontró ninguna planta para tu dolencia";
+                      descripcion = "";
+                    } else {
+                      final partes = plantaDescripcion.split("-");
+                      planta = partes[0];
+                      descripcion = partes[1];
+                    }
+                    // Actualizar el estado con la planta
+                    setState(() {
+                      service.planta = planta;
+                      service.descripcion = descripcion;
+                    });
+                    // Verificar si la descripción es vacía o no
+                    if (descripcion != "") {
+                      // Mostrar una ventana emergente con un mensaje
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text(
+                              "Recomendacion!",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 37, 70, 161),
+                                fontSize: 20,
+                                fontFamily: "Helvetica",
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset("assets/images/OIG5.jpeg"),
+
+                                // Aquí agregas la imagen que quieres mostrar
+                                const Text(
+                                  '"Por favor enfoca la planta a la cámara"',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 134, 161, 37),
+                                    fontSize: 18,
+                                    fontFamily: "Helvetica",
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  // Navegar a la clase YoloV8Seg y pasar los valores de servicio.planta y service.descripcion
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              YoloVideo(vision: vision)));
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text("Aceptar"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // Cerrar la ventana emergente
+                                  Navigator.pop(context);
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text("Cancelar"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: const Text('Buscar planta'),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'La planta que te recomiendo es:',
+                  style: TextStyle(fontSize: 24),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  service.planta,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Text(
+                      service.descripcion,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
