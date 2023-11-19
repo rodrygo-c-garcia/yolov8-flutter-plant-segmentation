@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:camera/camera.dart';
+import '../service/service_plant.dart';
 
 late List<CameraDescription> cameras;
 
@@ -13,6 +14,8 @@ class YoloVideo extends StatefulWidget {
 }
 
 class _YoloVideoState extends State<YoloVideo> {
+  ServicioPlanta service = ServicioPlanta();
+
   late CameraController controller;
   late List<Map<String, dynamic>> yoloResults;
   CameraImage? cameraImage;
