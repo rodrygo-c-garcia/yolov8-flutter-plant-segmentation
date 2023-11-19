@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vision/flutter_vision.dart';
-import '../models/yolo_video.dart';
 import '../models/yolo_image_v8seg.dart';
 import '../models/yolo_capture_v8seg.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
