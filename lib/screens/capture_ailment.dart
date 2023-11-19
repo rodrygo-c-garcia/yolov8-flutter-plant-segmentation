@@ -101,6 +101,42 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
                   service.planta = planta;
                   service.descripcion = descripcion;
                 });
+                // Verificar si la descripción es vacía o no
+                if (descripcion != "") {
+                  // Mostrar una ventana emergente con un mensaje
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Redirección"),
+                        content:
+                            const Text("Serás redirigido a la nueva ventana"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              // Navegar a la clase YoloV8Seg y pasar los valores de servicio.planta y service.descripcion
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => YoloVideo(
+                                          planta: service.planta,
+                                          descripcion: service.descripcion,
+                                          vision: vision)));
+                            },
+                            child: const Text("Aceptar"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Cerrar la ventana emergente
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Cancelar"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
               child: const Text('Buscar planta'),
             ),
