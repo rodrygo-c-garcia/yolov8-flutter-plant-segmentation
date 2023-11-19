@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:excel/excel.dart';
 // Importar el paquete services
 import 'package:flutter/services.dart' show rootBundle;
+import '../service/service_plant.dart';
 
 class CaptureAilment extends StatefulWidget {
   const CaptureAilment({Key? key}) : super(key: key);
@@ -11,15 +12,12 @@ class CaptureAilment extends StatefulWidget {
 }
 
 class CaptureAilmentPlant extends State<CaptureAilment> {
+  // una instancia de mi servicio
+  ServicioPlanta service = ServicioPlanta();
+
   // Crear el controlador del campo de texto
   final TextEditingController controller = TextEditingController();
-
-  // Crear la variable que almacena la planta
-  String _planta = "", _descripcion = "";
-
-  // Crear la lista de objetos DolenciaPlanta
-  List<DolenciaPlanta> lista = [];
-
+  String planta = "", descripcion = "";
   @override
   void initState() {
     super.initState();
@@ -29,7 +27,7 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
   }
 
   void llamarLista() async {
-    lista = await leerTabla("assets/plantas.xlsx");
+    service.lista = await leerTabla("assets/plantas.xlsx");
   }
 
   // Mover el método leerTabla dentro de la clase MyHomePageState
@@ -86,15 +84,19 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
                 // Obtener la dolencia del campo de texto
                 final dolencia = controller.text;
                 // Buscar la planta que corresponde a la dolencia
-                final plantaDescripcion = buscarPlanta(dolencia, lista);
-                final partes = plantaDescripcion.split("-");
-                final planta = partes[0];
-                final descripcion = partes[1];
-                debugPrint(descripcion);
+                final plantaDescripcion = buscarPlanta(dolencia, service.lista);
+                if (plantaDescripcion == null) {
+                  planta = "No se encontró ninguna planta para tu dolencia";
+                  descripcion = "";
+                } else {
+                  final partes = plantaDescripcion.split("-");
+                  planta = partes[0];
+                  descripcion = partes[1];
+                }
                 // Actualizar el estado con la planta
                 setState(() {
-                  _planta = planta;
-                  _descripcion = descripcion;
+                  service.planta = planta;
+                  service.descripcion = descripcion;
                 });
               },
               child: const Text('Buscar planta'),
@@ -106,13 +108,13 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
             ),
             const SizedBox(height: 20),
             Text(
-              _planta,
+              service.planta,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  _descripcion,
+                  service.descripcion,
                   style: const TextStyle(
                       fontSize: 15, fontWeight: FontWeight.normal),
                 ),
@@ -125,18 +127,11 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
   }
 }
 
-class DolenciaPlanta {
-  final String dolencia;
-  final String planta;
-
-  DolenciaPlanta(this.dolencia, this.planta);
-}
-
 String limpiarTexto(String texto) {
   return texto.replaceAll(RegExp(r'[^\w\s]'), '');
 }
 
-String buscarPlanta(String dolencia, List<DolenciaPlanta> lista) {
+String? buscarPlanta(String dolencia, List<DolenciaPlanta> lista) {
   dolencia = limpiarTexto(dolencia.toLowerCase());
   List<String> palabras = dolencia.split(' ');
 
@@ -152,5 +147,5 @@ String buscarPlanta(String dolencia, List<DolenciaPlanta> lista) {
   }
 
   // Si no se encuentra ninguna planta, devolver un mensaje de error
-  return "No se encontró ninguna planta para tu dolencia";
+  return null;
 }
