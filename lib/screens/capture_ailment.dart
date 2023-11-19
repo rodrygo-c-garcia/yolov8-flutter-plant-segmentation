@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:excel/excel.dart';
-// Importar el paquete services
 import 'package:flutter/services.dart' show rootBundle;
 import '../service/service_plant.dart';
+import 'package:flutter_vision/flutter_vision.dart';
+import '../models/yolo_video.dart';
 
 class CaptureAilment extends StatefulWidget {
   const CaptureAilment({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class CaptureAilment extends StatefulWidget {
 }
 
 class CaptureAilmentPlant extends State<CaptureAilment> {
+  late FlutterVision vision;
   // una instancia de mi servicio
   ServicioPlanta service = ServicioPlanta();
 
@@ -21,6 +23,7 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
   @override
   void initState() {
     super.initState();
+    vision = FlutterVision();
     // Llamar al método leerTabla y asignar el resultado a la variable lista
     debugPrint("iniciamos");
     llamarLista();
