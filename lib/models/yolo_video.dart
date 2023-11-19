@@ -62,6 +62,7 @@ max: La máxima resolución disponible para la cámara
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos el tamaño de la pantalla
     final Size size = MediaQuery.of(context).size;
     if (!isLoaded) {
       return const Scaffold(
@@ -79,7 +80,7 @@ max: La máxima resolución disponible para la cámara
             controller,
           ),
         ),
-        ...displayBoxesAroundRecognizedObjects(size),
+        ...displayBoxesAroundRecognizedObjects(size, service.planta),
         Positioned(
           bottom: 75,
           width: MediaQuery.of(context).size.width,
@@ -170,7 +171,7 @@ max: La máxima resolución disponible para la cámara
   }
 
   // cajas y poligonos
-  List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
+  List<Widget> displayBoxesAroundRecognizedObjects(Size screen, String planta) {
     if (yoloResults.isEmpty) return [];
 
     //double factorX = screen.width / (imageWidth);
@@ -183,13 +184,14 @@ max: La máxima resolución disponible para la cámara
 
     //double pady = (screen.height - newHeight) / 2;
 
-    Color colorPick = const Color.fromARGB(255, 165, 214, 160);
-
+    Color colorGreen = const Color.fromARGB(136, 0, 255, 0);
+    Color colorPick = const Color.fromARGB(136, 233, 30, 57);
     return yoloResults.map((result) {
+      debugPrint(result['tag']);
       return Stack(children: [
         Positioned(
           left: result["box"][0] * factorX,
-          top: result["box"][1] * factorY - 60,
+          top: result["box"][1] * factorY,
           width: (result["box"][2] - result["box"][0]) * factorX,
           height: (result["box"][3] - result["box"][1]) * factorY,
           child: Container(
@@ -200,7 +202,8 @@ max: La máxima resolución disponible para la cámara
             child: Text(
               "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
               style: TextStyle(
-                background: Paint()..color = colorPick,
+                background: Paint()
+                  ..color = result['tag'] == planta ? colorGreen : colorPick,
                 color: Colors.white,
                 fontSize: 18.0,
               ),
@@ -209,17 +212,21 @@ max: La máxima resolución disponible para la cámara
         ),
         Positioned(
             left: result["box"][0] * factorX,
-            top: result["box"][1] * factorY - 60,
+            top: result["box"][1] * factorY,
             width: (result["box"][2] - result["box"][0]) * factorX,
             height: (result["box"][3] - result["box"][1]) * factorY,
             child: CustomPaint(
               painter: PolygonPainter(
                   points: (result["polygons"] as List<dynamic>).map((e) {
-                Map<String, double> xy = Map<String, double>.from(e);
-                xy['x'] = (xy['x'] as double) * factorX;
-                xy['y'] = (xy['y'] as double) * factorY;
-                return xy;
-              }).toList()),
+                    Map<String, double> xy = Map<String, double>.from(e);
+                    xy['x'] = (xy['x'] as double) * factorX;
+                    xy['y'] = (xy['y'] as double) * factorY;
+                    return xy;
+                  }).toList(),
+                  planta: planta,
+                  colorGreen: colorGreen,
+                  colorPick: colorPick,
+                  tag: result['tag']),
             )),
       ]);
     }).toList();
@@ -228,13 +235,21 @@ max: La máxima resolución disponible para la cámara
 
 class PolygonPainter extends CustomPainter {
   final List<Map<String, double>> points;
-
-  PolygonPainter({required this.points});
+  String planta;
+  Color colorPick;
+  Color colorGreen;
+  String tag;
+  PolygonPainter(
+      {required this.points,
+      required this.planta,
+      required this.colorPick,
+      required this.colorGreen,
+      required this.tag});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color.fromARGB(129, 255, 2, 124)
+      ..color = tag == planta ? colorGreen : colorPick
       ..strokeWidth = 2
       ..style = PaintingStyle.fill;
 
