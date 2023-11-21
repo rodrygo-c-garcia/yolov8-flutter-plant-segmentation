@@ -83,51 +83,56 @@ max: La máxima resolución disponible para la cámara
         ),
       );
     }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: CameraPreview(
-            controller,
-          ),
-        ),
-        ...displayBoxesAroundRecognizedObjects(size, service.planta),
-        Positioned(
-          bottom: 75,
-          width: MediaQuery.of(context).size.width,
-          child: Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                  width: 5, color: Colors.white, style: BorderStyle.solid),
+    // retornamos un Sreenshot
+    return Screenshot(
+      // Envuelve el widget Stack con el widget Screenshot
+      controller: screenshotController, // Pasa el controlador como parámetro
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          AspectRatio(
+            aspectRatio: controller.value.aspectRatio,
+            child: CameraPreview(
+              controller,
             ),
-            child: isDetecting
-                ? IconButton(
-                    onPressed: () async {
-                      stopDetection();
-                    },
-                    icon: const Icon(
-                      Icons.stop,
-                      color: Colors.red,
-                    ),
-                    iconSize: 50,
-                  )
-                : IconButton(
-                    onPressed: () async {
-                      await startDetection();
-                    },
-                    icon: const Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                    ),
-                    iconSize: 50,
-                  ),
           ),
-        ),
-      ],
+          ...displayBoxesAroundRecognizedObjects(size, service.planta),
+          Positioned(
+            bottom: 75,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                    width: 5, color: Colors.white, style: BorderStyle.solid),
+              ),
+              child: isDetecting
+                  ? IconButton(
+                      onPressed: () async {
+                        stopDetection();
+                      },
+                      icon: const Icon(
+                        Icons.stop,
+                        color: Colors.red,
+                      ),
+                      iconSize: 50,
+                    )
+                  : IconButton(
+                      onPressed: () async {
+                        await startDetection(navigator);
+                      },
+                      icon: const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                      iconSize: 50,
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -143,7 +148,7 @@ max: La máxima resolución disponible para la cámara
     });
   }
 
-  Future<void> yoloOnFrame(CameraImage cameraImage) async {
+  Future<void> yoloOnFrame(CameraImage cameraImage, navigator) async {
     imageHeight = cameraImage.height;
     imageWidth = cameraImage.width;
     final result = await widget.vision.yoloOnFrame(
@@ -157,10 +162,49 @@ max: La máxima resolución disponible para la cámara
       setState(() {
         yoloResults = result;
       });
+      // Captura la pantalla si se cumple la condición
+      if (service.planta == tagPlanta && !isCaptured) {
+        debugPrint("Planta encontrada: $tagPlanta");
+        // Muestra un mensaje emergente con el texto "Enfoca esta planta $tagPlanta"
+        Fluttertoast.showToast(
+            msg: "Enfoca la planta $tagPlanta",
+            toastLength: Toast.LENGTH_LONG, // La duración del mensaje
+            gravity: ToastGravity.TOP, // La posición del mensaje
+            timeInSecForIosWeb: 5, // El tiempo que se muestra el mensaje en iOS
+            backgroundColor: Colors.blue, // El color de fondo del mensaje
+            textColor: Colors.white, // El color del texto del mensaje
+            fontSize: 16.0 // El tamaño del texto del mensaje
+            );
+        captureScreen(navigator);
+        isCaptured = true;
+      }
     }
   }
 
-  Future<void> startDetection() async {
+  void captureScreen(NavigatorState navigator) async {
+    // Captura la imagen como un Uint8List
+    Uint8List? capturedImage = await screenshotController.capture();
+    // Comprueba si el valor es nulo
+    if (capturedImage != null) {
+      // Navega a la vista ViewPlant y pasa el Uint8List capturado como argumento
+      // Usa la referencia al Navigator en lugar del contexto
+      debugPrint("Imagen a enviar: $capturedImage.toString()");
+      navigator
+          .push(
+            MaterialPageRoute(
+              builder: (context) => ViewPlant(image: capturedImage),
+            ),
+          )
+          .then((value) => {
+                stopDetection(),
+              });
+    } else {
+      // Muestra un mensaje de error o un widget alternativo
+      debugPrint("No se pudo capturar la imagen");
+    }
+  }
+
+  Future<void> startDetection(NavigatorState navigator) async {
     setState(() {
       isDetecting = true;
     });
@@ -170,7 +214,7 @@ max: La máxima resolución disponible para la cámara
     await controller.startImageStream((image) async {
       if (isDetecting) {
         cameraImage = image;
-        yoloOnFrame(image);
+        yoloOnFrame(image, navigator);
       }
     });
   }
@@ -186,7 +230,7 @@ max: La máxima resolución disponible para la cámara
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen, String planta) {
     if (yoloResults.isEmpty) return [];
 
-    //double factorX = screen.width / (imageWidth);
+    // //double factorX = screen.width / (imageWidth);/
     double factorX = screen.width / (cameraImage?.height ?? 1);
     //double imgRatio = imageWidth / imageHeight;
     //double newWidth = imageWidth * factorX;
@@ -199,7 +243,9 @@ max: La máxima resolución disponible para la cámara
     Color colorGreen = const Color.fromARGB(136, 0, 255, 0);
     Color colorPick = const Color.fromARGB(136, 233, 30, 57);
     return yoloResults.map((result) {
-      debugPrint(result['tag']);
+      // Asignamos nuestro tag
+      tagPlanta = result['tag'];
+
       return Stack(children: [
         Positioned(
           left: result["box"][0] * factorX,
