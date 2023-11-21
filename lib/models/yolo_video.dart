@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:camera/camera.dart';
 import '../service/service_plant.dart';
+import 'package:screenshot/screenshot.dart';
+import 'dart:typed_data';
+import '../screens/view_plant.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 late List<CameraDescription> cameras;
 
@@ -14,7 +18,10 @@ class YoloVideo extends StatefulWidget {
 }
 
 class _YoloVideoState extends State<YoloVideo> {
+  // servicio de planta
   ServicioPlanta service = ServicioPlanta();
+  // Crea el controlador de screenshot
+  ScreenshotController screenshotController = ScreenshotController();
 
   late CameraController controller;
   late List<Map<String, dynamic>> yoloResults;
