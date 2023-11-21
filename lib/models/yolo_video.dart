@@ -74,6 +74,8 @@ max: La máxima resolución disponible para la cámara
   Widget build(BuildContext context) {
     // Obtenemos el tamaño de la pantalla
     final Size size = MediaQuery.of(context).size;
+    // Obtiene una referencia al Navigator del contexto
+    final navigator = Navigator.of(context);
     if (!isLoaded) {
       return const Scaffold(
         body: Center(
