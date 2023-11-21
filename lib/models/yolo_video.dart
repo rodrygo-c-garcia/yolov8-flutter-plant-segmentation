@@ -31,6 +31,9 @@ class _YoloVideoState extends State<YoloVideo> {
   int imageHeight = 1;
   int imageWidth = 1;
 
+  var tagPlanta = "";
+  final navigator = '';
+  bool isCaptured = false;
   @override
   void initState() {
     super.initState();
