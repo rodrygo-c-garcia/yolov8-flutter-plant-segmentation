@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'dart:ui';
+
+// Crea una instancia del RouteObserver
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +13,7 @@ main() async {
     MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [routeObserver],
       home: const MyApp(),
       builder: EasyLoading.init(),
     ),
