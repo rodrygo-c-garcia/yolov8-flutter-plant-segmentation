@@ -22,49 +22,49 @@ class ViewPlantInfo extends State<ViewPlant> {
     switch (service.planta) {
       case "apacarro":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para apacarro
+            'assets/images/apacarro/apacarro1.jpg'; // La ruta de la primera imagen local para apacarro
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para apacarro
+            'assets/images/apacarro/apacarro2.jpg'; // La ruta de la segunda imagen local para apacarro
         break;
       case "jengibre":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para jengibre
+            'assets/images/jengibre/jengibre1.jpg'; // La ruta de la primera imagen local para jengibre
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para jengibre
+            'assets/images/jengibre/jengibre2.jpg'; // La ruta de la segunda imagen local para jengibre
         break;
       case "menta":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para menta
+            'assets/images/menta/menta1.jpg'; // La ruta de la primera imagen local para menta
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para menta
+            'assets/images/menta/menta2.jpg'; // La ruta de la segunda imagen local para menta
         break;
       case "eucalipto":
         imageUrl1 =
-            "https://i.ibb.co/wCMvVMY/eucalipto.jpg"; // La URL de la primera imagen adicional para eucalipto
+            'assets/images/eucalipto/eucalipto1.jpeg'; // La ruta de la primera imagen local para eucalipto
         imageUrl2 =
-            "https://i.ibb.co/QCYy0sW/eucalipto.jpg"; // La URL de la segunda imagen adicional para eucalipto
+            'assets/images/eucalipto/eucalipto2.jpeg'; // La ruta de la segunda imagen local para eucalipto
         break;
       case "malva":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para malva
+            'assets/images/malva/malva1.jpg'; // La ruta de la primera imagen local para malva
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para malva
+            'assets/images/malva/malva2.jpg'; // La ruta de la segunda imagen local para malva
         break;
       case "manzanilla":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para manzanilla
+            'assets/images/manzanilla/manzanilla1.jpg'; // La ruta de la primera imagen local para manzanilla
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para manzanilla
+            'assets/images/manzanilla/manzanilla2.jpg'; // La ruta de la segunda imagen local para manzanilla
         break;
       case "siempreviva":
         imageUrl1 =
-            "https://i.ibb.co/..."; // La URL de la primera imagen adicional para siempreviva
+            'assets/images/siempreviva/siempreviva1.jpg'; // La ruta de la primera imagen local para siempreviva
         imageUrl2 =
-            "https://i.ibb.co/..."; // La URL de la segunda imagen adicional para siempreviva
+            'assets/images/siempreviva/siempreviva2.jpg'; // La ruta de la segunda imagen local para siempreviva
         break;
       default:
-        imageUrl1 = ""; // La URL por defecto para la primera imagen adicional
-        imageUrl2 = ""; // La URL por defecto para la segunda imagen adicional
+        imageUrl1 = ""; // La ruta por defecto para la primera imagen local
+        imageUrl2 = ""; // La ruta por defecto para la segunda imagen local
         break;
     }
 
