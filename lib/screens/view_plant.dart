@@ -100,31 +100,19 @@ class ViewPlantInfo extends State<ViewPlant> {
                   // Muestra la primera imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.network(
+                      child: Image.asset(
                         imageUrl1, // La URL de la primera imagen adicional
                         fit: BoxFit.contain,
                         alignment: Alignment
                             .topCenter, // Alinea la imagen dentro del FittedBox
                         // Usa el argumento loadingBuilder para mostrar un widget mientras la imagen se carga
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          // Si el progreso de carga es nulo, significa que la imagen ya se ha cargado, así que se devuelve el widget hijo
-                          if (loadingProgress == null) return child;
-                          // Si no, se devuelve un widget CircularProgressIndicator para mostrar el progreso de carga
-                          return CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          );
-                        },
                       ),
                     ),
                   ),
                   // Muestra la segunda imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.network(
+                      child: Image.asset(
                         fit: BoxFit.contain,
                         alignment: Alignment
                             .topCenter, // Alinea la imagen dentro del FittedBox
