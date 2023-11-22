@@ -72,6 +72,45 @@ max: La máxima resolución disponible para la cámara
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Registra el RouteObserver para esta pantalla
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void didPush() {
+    // Invoca a super para comunicarte con el RouteObserver
+    super.didPush();
+  }
+
+  // Define el método didPop que se llama cuando se cierra esta pantalla
+  @override
+  void didPop() {
+    // Invoca a super para comunicarte con el RouteObserver
+    super.didPop();
+  }
+
+  @override
+  void didPopNext() {
+    // Esta función se ejecuta cuando se cierra la pantalla ViewPlant y se vuelve a la pantalla _YoloVideoState
+    super.didPopNext();
+    // Aquí puedes restablecer el valor de isDetected a false
+    setState(() {
+      isCaptured = false;
+      tagPlanta = "";
+      frameCount = 0;
+    });
+  }
+
+  @override
+  void didPushNext() {
+    // Se llama cuando se abre la pantalla siguiente y se sale de esta pantalla
+    // Aquí puedes detener la detección de plantas
+    stopDetection();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Obtenemos el tamaño de la pantalla
     final Size size = MediaQuery.of(context).size;
