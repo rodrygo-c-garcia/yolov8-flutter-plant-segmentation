@@ -221,8 +221,12 @@ max: La máxima resolución disponible para la cámara
             textColor: Colors.white, // El color del texto del mensaje
             fontSize: 16.0 // El tamaño del texto del mensaje
             );
-        captureScreen(navigator);
-        isCaptured = true;
+
+        // Usa Future.delayed para retrasar la ejecución del método captureScreen
+        Future.delayed(const Duration(seconds: 2), () {
+          // Llama al método captureScreen después de 3 segundos
+          captureScreen(navigator);
+        });
       }
     }
   }
