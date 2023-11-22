@@ -18,7 +18,7 @@ class YoloVideo extends StatefulWidget {
   State<YoloVideo> createState() => _YoloVideoState();
 }
 
-class _YoloVideoState extends State<YoloVideo> {
+class _YoloVideoState extends State<YoloVideo> with RouteAware {
   // servicio de planta
   ServicioPlanta service = ServicioPlanta();
   // Crea el controlador de screenshot
