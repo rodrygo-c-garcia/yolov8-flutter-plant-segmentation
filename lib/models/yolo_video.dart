@@ -236,18 +236,13 @@ max: La máxima resolución disponible para la cámara
     Uint8List? capturedImage = await screenshotController.capture();
     // Comprueba si el valor es nulo
     if (capturedImage != null) {
-      // Navega a la vista ViewPlant y pasa el Uint8List capturado como argumento
-      // Usa la referencia al Navigator en lugar del contexto
       debugPrint("Imagen a enviar: $capturedImage.toString()");
-      navigator
-          .push(
-            MaterialPageRoute(
-              builder: (context) => ViewPlant(image: capturedImage),
-            ),
-          )
-          .then((value) => {
-                stopDetection(),
-              });
+
+      navigator.push(
+        MaterialPageRoute(
+          builder: (context) => ViewPlant(image: capturedImage),
+        ),
+      );
     } else {
       // Muestra un mensaje de error o un widget alternativo
       debugPrint("No se pudo capturar la imagen");
