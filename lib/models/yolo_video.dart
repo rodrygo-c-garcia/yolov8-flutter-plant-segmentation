@@ -6,6 +6,7 @@ import 'package:screenshot/screenshot.dart';
 import 'dart:typed_data';
 import '../screens/view_plant.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:plantnet_sucre/main.dart';
 
 late List<CameraDescription> cameras;
 
