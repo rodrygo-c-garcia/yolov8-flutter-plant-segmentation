@@ -35,6 +35,7 @@ class _YoloVideoState extends State<YoloVideo> with RouteAware {
   var tagPlanta = "";
 
   bool isCaptured = false;
+  int frameCount = 0;
   @override
   void initState() {
     super.initState();
@@ -202,10 +203,15 @@ max: La máxima resolución disponible para la cámara
       setState(() {
         yoloResults = result;
       });
+      frameCount++;
+
+      debugPrint("isCaptured: $isCaptured");
+      debugPrint("TagPLANTA: $tagPlanta");
       // Captura la pantalla si se cumple la condición
-      if (service.planta == tagPlanta && !isCaptured) {
+      if (service.planta == tagPlanta && !isCaptured && frameCount >= 3) {
         debugPrint("Planta encontrada: $tagPlanta");
         // Muestra un mensaje emergente con el texto "Enfoca esta planta $tagPlanta"
+        isCaptured = true;
         Fluttertoast.showToast(
             msg: "Enfoca la planta $tagPlanta",
             toastLength: Toast.LENGTH_LONG, // La duración del mensaje
