@@ -125,35 +125,76 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   }
 
   yoloOnImage() async {
-    //cargando
     // Muestra el loading con el indicador de tipo cubeGrid
-    EasyLoading.show(
-      status: 'Identificando Planta...',
-    );
+    if (!(imageFile == null)) {
+      EasyLoading.show(
+        status: 'Identificando Planta...',
+      );
 
-    yoloResults.clear();
-    Uint8List byte = await imageFile!.readAsBytes();
-    final image = await decodeImageFromList(byte);
-    imageHeight = image.height;
-    imageWidth = image.width;
-    final result = await widget.vision.yoloOnImage(
-        bytesList: byte,
-        imageHeight: image.height,
-        imageWidth: image.width,
-        iouThreshold: 0.8,
-        confThreshold: 0.4,
-        classThreshold: 0.5);
-    if (result.isNotEmpty) {
-      EasyLoading.showSuccess('Identificado!');
-      setState(() {
-        yoloResults = result;
-      });
+      yoloResults.clear();
+      Uint8List byte = await imageFile!.readAsBytes();
+      final image = await decodeImageFromList(byte);
+      imageHeight = image.height;
+      imageWidth = image.width;
+      final result = await widget.vision.yoloOnImage(
+          bytesList: byte,
+          imageHeight: image.height,
+          imageWidth: image.width,
+          iouThreshold: 0.8,
+          confThreshold: 0.4,
+          classThreshold: 0.5);
+      if (result.isNotEmpty) {
+        EasyLoading.showSuccess('Identificado!');
+        setState(() {
+          yoloResults = result;
+          debugPrint(yoloResults.toString());
+        });
+        tags =
+            yoloResults.map((result) => result['tag']).toList().cast<String>();
+        debugPrint(tags.toString());
+      } else {
+        // Muestra un mensaje de error si el resultado está vacío
+        EasyLoading.showError('No se pudo identificar la Planta.');
+      }
+      // Oculta el loading después de llamar al método setState
+      EasyLoading.dismiss();
     } else {
-      // Muestra un mensaje de error si el resultado está vacío
-      EasyLoading.showError('No se pudo detectar nada.');
+      Fluttertoast.showToast(
+          msg: "Por favor suba una imagen primero.",
+          toastLength: Toast.LENGTH_LONG, // La duración del mensaje
+          gravity: ToastGravity.CENTER, // La posición del mensaje
+          timeInSecForIosWeb: 3, // El tiempo que se muestra el mensaje en iOS
+          backgroundColor: Colors.blue, // El color de fondo del mensaje
+          textColor: Colors.white, // El color del texto del mensaje
+          fontSize: 16.0 // El tamaño del texto del mensaje
+          );
     }
-    // Oculta el loading después de llamar al método setState
-    EasyLoading.dismiss();
+  }
+
+  void plantsList(NavigatorState navigator) async {
+    if (tags.isNotEmpty) {
+      Uint8List? capturedImage = await screenshotController.capture();
+      // Obtener el objeto RenderRepaintBoundary del widget usando el operador as
+
+      // Comprueba si el valor es nulo
+      if (capturedImage != null) {
+        navigator.push(
+          MaterialPageRoute(
+            builder: (context) => PlantsList(image: capturedImage),
+          ),
+        );
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "Por favor identifique una planta primero.",
+          toastLength: Toast.LENGTH_LONG, // La duración del mensaje
+          gravity: ToastGravity.CENTER, // La posición del mensaje
+          timeInSecForIosWeb: 3, // El tiempo que se muestra el mensaje en iOS
+          backgroundColor: Colors.orange, // El color de fondo del mensaje
+          textColor: Colors.white, // El color del texto del mensaje
+          fontSize: 16.0 // El tamaño del texto del mensaje
+          );
+    }
   }
 
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
