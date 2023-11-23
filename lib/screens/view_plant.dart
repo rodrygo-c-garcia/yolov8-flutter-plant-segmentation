@@ -81,7 +81,6 @@ class ViewPlantInfo extends State<ViewPlant> {
             crossAxisAlignment: CrossAxisAlignment
                 .center, // Alinea los widgets hijos horizontalmente
             children: [
-              // Muestra la imagen capturada usando Image.memory dentro de un FittedBox
               Row(
                 children: [
                   // Muestra la imagen capturada usando Image.memory dentro de un Expanded y un FittedBox
@@ -93,7 +92,7 @@ class ViewPlantInfo extends State<ViewPlant> {
                             .topCenter, // Alinea la imagen dentro del FittedBox
                         widget.image,
                         width: MediaQuery.of(context).size.width *
-                            0.3, // Especifica el ancho de la imagen en píxeles
+                            0.9, // Especifica el ancho de la imagen en píxeles
                       ),
                     ),
                   ),
