@@ -53,28 +53,50 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
         ),
       );
     }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        imageFile != null ? Image.file(imageFile!) : const SizedBox(),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: pickImage,
-                child: const Text("Subir imagen"),
-              ),
-              ElevatedButton(
-                onPressed: yoloOnImage,
-                child: const Text("Detectar"),
-              )
-            ],
+    final navigator = Navigator.of(context);
+    return Screenshot(
+      // Envuelve el widget Stack con el widget Screenshot
+      controller: screenshotController,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          imageFile != null ? Image.file(imageFile!) : const SizedBox(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: pickImage,
+                  child: const Text("Subir imagen"),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: yoloOnImage,
+                  child: const Text("Detectar"),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    plantsList(navigator);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // Esto cambia el estilo del botón
+                    backgroundColor: Colors
+                        .green, // Esto hace que el botón sea de color verde
+                  ),
+                  child: const Text("Ver Planta"),
+                ),
+              ],
+            ),
           ),
-        ),
-        ...displayBoxesAroundRecognizedObjects(size),
-      ],
+          ...displayBoxesAroundRecognizedObjects(size),
+        ],
+      ),
     );
   }
 
