@@ -75,7 +75,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
                 ),
                 ElevatedButton(
                   onPressed: yoloOnImage,
-                  child: const Text("Identtificar"),
+                  child: const Text("Identificar"),
                 ),
                 const SizedBox(
                   width: 10,
@@ -151,7 +151,8 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
         });
         tags =
             yoloResults.map((result) => result['tag']).toList().cast<String>();
-        debugPrint(tags.toString());
+        tags = tags.toSet().toList();
+        debugPrint("TAGS: $tags.toString()");
       } else {
         // Muestra un mensaje de error si el resultado está vacío
         EasyLoading.showError('No se pudo identificar la Planta.');
