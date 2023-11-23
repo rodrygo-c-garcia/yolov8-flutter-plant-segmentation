@@ -51,4 +51,16 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
       ),
     );
   }
+
+  Widget buildTagButton(String tag) {
+    return ElevatedButton(
+      onPressed: () {
+        debugPrint("Tag: $tag");
+      },
+      style: ElevatedButton.styleFrom(
+          // Aquí puedes definir el estilo del botón, como el color, el tamaño, el borde, etc.
+          ),
+      child: Text(tag),
+    );
+  }
 }
