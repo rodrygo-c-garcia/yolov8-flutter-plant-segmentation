@@ -4,7 +4,7 @@ class MyClipper extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
     // Aquí va tu lógica para crear el rectángulo de recorte
-    return Rect.fromLTRB(0, 10, size.width, size.height - 15);
+    return Rect.fromLTRB(0, 35, size.width, size.height - 35);
   }
 
   @override
