@@ -63,4 +63,8 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
       child: Text(tag),
     );
   }
+
+  List<Widget> buildTagButtons(List<String> tags) {
+    return tags.map((tag) => buildTagButton(tag)).toList();
+  }
 }
