@@ -3,7 +3,9 @@ import 'dart:typed_data';
 
 class PlantsList extends StatefulWidget {
   final Uint8List image;
-  const PlantsList({Key? key, required this.image}) : super(key: key);
+  final List<String> tags;
+  const PlantsList({Key? key, required this.image, required this.tags})
+      : super(key: key);
 
   @override
   State<PlantsList> createState() => _PlantsListState();
