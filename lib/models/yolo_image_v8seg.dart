@@ -181,7 +181,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
       if (capturedImage != null) {
         navigator.push(
           MaterialPageRoute(
-            builder: (context) => PlantsList(image: capturedImage),
+            builder: (context) => PlantsList(image: capturedImage, tags: tags),
           ),
         );
       }
@@ -223,7 +223,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
               border: Border.all(color: Colors.pink, width: 2.0),
             ),
             child: Text(
-              "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
+              "${result['tag'] == "alparraco" ? "alcaparro" : result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
               style: TextStyle(
                 background: Paint()..color = colorPick,
                 color: Colors.white,
