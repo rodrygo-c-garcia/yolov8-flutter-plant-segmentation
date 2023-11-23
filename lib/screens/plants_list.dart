@@ -17,6 +17,7 @@ class PlantsList extends StatefulWidget {
 class _PlantsListState extends State<PlantsList> with RouteAware {
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ver planta'),
