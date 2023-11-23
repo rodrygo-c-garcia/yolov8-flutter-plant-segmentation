@@ -36,18 +36,35 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
                   // Muestra la imagen capturada usando Image.memory dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.memory(
-                        fit: BoxFit.contain,
-                        alignment: Alignment
-                            .topCenter, // Alinea la imagen dentro del FittedBox
-                        widget.image,
-                        width: MediaQuery.of(context).size.width *
-                            0.3, // Especifica el ancho de la imagen en píxeles
+                      child: ClipRect(
+                        // Esto hace que la imagen se recorte con un rectángulo
+                        clipBehavior: Clip
+                            .hardEdge, // Esto hace que el recorte sea duro, sin anti-aliasing
+                        clipper:
+                            MyClipper(), // Esto usa la subclase que hemos creado antes como el clipper
+                        child: Image.memory(
+                          fit: BoxFit.contain,
+                          // Alinea la imagen dentro del FittedBox
+                          alignment: Alignment.topCenter,
+                          widget.image,
+                          width: MediaQuery.of(context).size.width *
+                              0.5, // Especifica el ancho de la imagen en píxeles como el 80% del ancho de la pantalla
+                          height: MediaQuery.of(context).size.height * 0.3,
+                        ),
                       ),
                     ),
                   ),
+
                   // Muestra la primera imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                 ],
+              ),
+              const Text(
+                "Plantas Identificadas en la Imagen",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+              ),
+              Expanded(
+                // Usa la función creada en el paso anterior, pasando la lista tags como parámetro
+                child: buildTagGrid(widget.tags, navigator),
               ),
             ],
           ),
