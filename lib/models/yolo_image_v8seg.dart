@@ -75,7 +75,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
                 ),
                 ElevatedButton(
                   onPressed: yoloOnImage,
-                  child: const Text("Detectar"),
+                  child: const Text("Identtificar"),
                 ),
                 const SizedBox(
                   width: 10,
