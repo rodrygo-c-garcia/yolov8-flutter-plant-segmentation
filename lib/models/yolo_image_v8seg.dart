@@ -18,12 +18,14 @@ class YoloImageV8Seg extends StatefulWidget {
   State<YoloImageV8Seg> createState() => _YoloImageV8SegState();
 }
 
-class _YoloImageV8SegState extends State<YoloImageV8Seg> {
+class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   late List<Map<String, dynamic>> yoloResults;
+  ScreenshotController screenshotController = ScreenshotController();
   File? imageFile;
   int imageHeight = 1;
   int imageWidth = 1;
   bool isLoaded = false;
+  List<String> tags = [];
 
   @override
   void initState() {
