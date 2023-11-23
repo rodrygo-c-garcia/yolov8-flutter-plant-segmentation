@@ -32,7 +32,7 @@ class _YoloVideoState extends State<YoloVideo> with RouteAware {
   int imageHeight = 1;
   int imageWidth = 1;
 
-  var tagPlanta = "";
+  List<String> tags = [];
 
   bool isCaptured = false;
   int frameCount = 0;
@@ -99,7 +99,7 @@ max: La máxima resolución disponible para la cámara
     // Aquí puedes restablecer el valor de isDetected a false
     setState(() {
       isCaptured = false;
-      tagPlanta = "";
+      tags.clear();
       frameCount = 0;
     });
   }
@@ -189,7 +189,8 @@ max: La máxima resolución disponible para la cámara
     });
   }
 
-  Future<void> yoloOnFrame(CameraImage cameraImage, navigator) async {
+  Future<void> yoloOnFrame(
+      CameraImage cameraImage, NavigatorState navigator) async {
     imageHeight = cameraImage.height;
     imageWidth = cameraImage.width;
     final result = await widget.vision.yoloOnFrame(
@@ -204,16 +205,15 @@ max: La máxima resolución disponible para la cámara
         yoloResults = result;
       });
       frameCount++;
+      tags = yoloResults.map((result) => result['tag']).toList().cast<String>();
 
-      debugPrint("isCaptured: $isCaptured");
-      debugPrint("TagPLANTA: $tagPlanta");
       // Captura la pantalla si se cumple la condición
-      if (service.planta == tagPlanta && !isCaptured && frameCount >= 3) {
-        debugPrint("Planta encontrada: $tagPlanta");
+      if (tags.contains(service.planta) && !isCaptured && frameCount >= 3) {
+        debugPrint("Planta encontrada: ${service.planta}");
         // Muestra un mensaje emergente con el texto "Enfoca esta planta $tagPlanta"
         isCaptured = true;
         Fluttertoast.showToast(
-            msg: "Enfoca la planta $tagPlanta",
+            msg: "Enfoca la planta ${service.planta}",
             toastLength: Toast.LENGTH_LONG, // La duración del mensaje
             gravity: ToastGravity.TOP, // La posición del mensaje
             timeInSecForIosWeb: 5, // El tiempo que se muestra el mensaje en iOS
@@ -268,6 +268,7 @@ max: La máxima resolución disponible para la cámara
     setState(() {
       isDetecting = false;
       yoloResults.clear();
+      tags.clear();
     });
   }
 
@@ -289,7 +290,6 @@ max: La máxima resolución disponible para la cámara
     Color colorPick = const Color.fromARGB(136, 233, 30, 57);
     return yoloResults.map((result) {
       // Asignamos nuestro tag
-      tagPlanta = result['tag'];
 
       return Stack(children: [
         Positioned(
