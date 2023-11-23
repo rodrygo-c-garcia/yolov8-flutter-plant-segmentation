@@ -67,4 +67,12 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
   List<Widget> buildTagButtons(List<String> tags) {
     return tags.map((tag) => buildTagButton(tag)).toList();
   }
+
+  Widget buildTagGrid(List<String> tags) {
+    return GridView.count(
+      crossAxisCount: 3, // Esto hace que la cuadrícula tenga tres columnas
+      children: buildTagButtons(
+          tags), // Esto hace que la cuadrícula muestre los botones creados en el paso anterior
+    );
+  }
 }
