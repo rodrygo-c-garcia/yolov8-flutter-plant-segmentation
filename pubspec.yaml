@@ -44,6 +44,7 @@ dependencies:
   screenshot: ^2.1.0
   image_cropper: ^5.0.0
   fluttertoast: ^8.2.4
+  image: ^4.1.3
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/eucalipto/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
