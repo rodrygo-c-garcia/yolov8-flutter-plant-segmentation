@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'dart:math';
+import '../class/my_clipper.dart';
+import 'detail_plant.dart';
 
 class PlantsList extends StatefulWidget {
   final Uint8List image;
