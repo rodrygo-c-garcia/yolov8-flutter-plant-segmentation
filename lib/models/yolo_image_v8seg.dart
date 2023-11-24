@@ -26,6 +26,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   int imageWidth = 1;
   bool isLoaded = false;
   List<String> tags = [];
+  bool isDetected = false;
 
   @override
   void initState() {
@@ -120,6 +121,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
     if (photo != null) {
       setState(() {
         imageFile = File(photo.path);
+        isDetected = true;
       });
     }
   }
@@ -147,7 +149,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
         EasyLoading.showSuccess('Identificado!');
         setState(() {
           yoloResults = result;
-          debugPrint(yoloResults.toString());
+          isDetected = false;
         });
         tags =
             yoloResults.map((result) => result['tag']).toList().cast<String>();
@@ -173,7 +175,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   }
 
   void plantsList(NavigatorState navigator) async {
-    if (tags.isNotEmpty) {
+    if (tags.isNotEmpty && !isDetected) {
       Uint8List? capturedImage = await screenshotController.capture();
       // Obtener el objeto RenderRepaintBoundary del widget usando el operador as
 
