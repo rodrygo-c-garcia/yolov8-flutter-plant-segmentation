@@ -6,22 +6,26 @@ import 'dart:async';
 import 'package:flutter_vision/flutter_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:screenshot/screenshot.dart';
+import '../screens/plants_list.dart';
 
-// Captura de una imagen de la camara y segmentacion
 class YoloCaptureV8Seg extends StatefulWidget {
   final FlutterVision vision;
   const YoloCaptureV8Seg({Key? key, required this.vision}) : super(key: key);
 
   @override
-  State<YoloCaptureV8Seg> createState() => _YoloCaptureV8Seg();
+  State<YoloCaptureV8Seg> createState() => _YoloV8CaptureSegState();
 }
 
-class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
+class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
   late List<Map<String, dynamic>> yoloResults;
+  ScreenshotController screenshotController = ScreenshotController();
   File? imageFile;
   int imageHeight = 1;
   int imageWidth = 1;
   bool isLoaded = false;
+  List<String> tags = [];
 
   @override
   void initState() {
@@ -49,28 +53,50 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
         ),
       );
     }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        imageFile != null ? Image.file(imageFile!) : const SizedBox(),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: pickImage,
-                child: const Text("capturar imagen"),
-              ),
-              ElevatedButton(
-                onPressed: yoloOnImage,
-                child: const Text("Detectar"),
-              )
-            ],
+    final navigator = Navigator.of(context);
+    return Screenshot(
+      // Envuelve el widget Stack con el widget Screenshot
+      controller: screenshotController,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          imageFile != null ? Image.file(imageFile!) : const SizedBox(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: pickImage,
+                  child: const Text("Capturar imagen"),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: yoloOnImage,
+                  child: const Text("Identificar"),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    plantsList(navigator);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // Esto cambia el estilo del botón
+                    backgroundColor: Colors
+                        .green, // Esto hace que el botón sea de color verde
+                  ),
+                  child: const Text("Ver Planta"),
+                ),
+              ],
+            ),
           ),
-        ),
-        ...displayBoxesAroundRecognizedObjects(size),
-      ],
+          ...displayBoxesAroundRecognizedObjects(size),
+        ],
+      ),
     );
   }
 
@@ -99,33 +125,77 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
   }
 
   yoloOnImage() async {
-    EasyLoading.show(
-      status: 'Identificando Planta...',
-    );
+    // Muestra el loading con el indicador de tipo cubeGrid
+    if (!(imageFile == null)) {
+      EasyLoading.show(
+        status: 'Identificando Planta...',
+      );
 
-    yoloResults.clear();
-    Uint8List byte = await imageFile!.readAsBytes();
-    final image = await decodeImageFromList(byte);
-    imageHeight = image.height;
-    imageWidth = image.width;
-    final result = await widget.vision.yoloOnImage(
-        bytesList: byte,
-        imageHeight: image.height,
-        imageWidth: image.width,
-        iouThreshold: 0.8,
-        confThreshold: 0.4,
-        classThreshold: 0.5);
-    if (result.isNotEmpty) {
-      EasyLoading.showSuccess('Identificado!');
-      setState(() {
-        yoloResults = result;
-      });
+      yoloResults.clear();
+      Uint8List byte = await imageFile!.readAsBytes();
+      final image = await decodeImageFromList(byte);
+      imageHeight = image.height;
+      imageWidth = image.width;
+      final result = await widget.vision.yoloOnImage(
+          bytesList: byte,
+          imageHeight: image.height,
+          imageWidth: image.width,
+          iouThreshold: 0.8,
+          confThreshold: 0.4,
+          classThreshold: 0.5);
+      if (result.isNotEmpty) {
+        EasyLoading.showSuccess('Identificado!');
+        setState(() {
+          yoloResults = result;
+          debugPrint(yoloResults.toString());
+        });
+        tags =
+            yoloResults.map((result) => result['tag']).toList().cast<String>();
+        tags = tags.toSet().toList();
+        debugPrint("TAGS: $tags.toString()");
+      } else {
+        // Muestra un mensaje de error si el resultado está vacío
+        EasyLoading.showError('No se pudo identificar la Planta.');
+      }
+      // Oculta el loading después de llamar al método setState
+      EasyLoading.dismiss();
     } else {
-      // Muestra un mensaje de error si el resultado está vacío
-      EasyLoading.showError('No se pudo detectar nada.');
+      Fluttertoast.showToast(
+          msg: "Por favor suba una imagen primero.",
+          toastLength: Toast.LENGTH_LONG, // La duración del mensaje
+          gravity: ToastGravity.CENTER, // La posición del mensaje
+          timeInSecForIosWeb: 3, // El tiempo que se muestra el mensaje en iOS
+          backgroundColor: Colors.blue, // El color de fondo del mensaje
+          textColor: Colors.white, // El color del texto del mensaje
+          fontSize: 16.0 // El tamaño del texto del mensaje
+          );
     }
-    // Oculta el loading después de llamar al método setState
-    EasyLoading.dismiss();
+  }
+
+  void plantsList(NavigatorState navigator) async {
+    if (tags.isNotEmpty) {
+      Uint8List? capturedImage = await screenshotController.capture();
+      // Obtener el objeto RenderRepaintBoundary del widget usando el operador as
+
+      // Comprueba si el valor es nulo
+      if (capturedImage != null) {
+        navigator.push(
+          MaterialPageRoute(
+            builder: (context) => PlantsList(image: capturedImage, tags: tags),
+          ),
+        );
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "Por favor identifique una planta primero.",
+          toastLength: Toast.LENGTH_LONG, // La duración del mensaje
+          gravity: ToastGravity.CENTER, // La posición del mensaje
+          timeInSecForIosWeb: 3, // El tiempo que se muestra el mensaje en iOS
+          backgroundColor: Colors.orange, // El color de fondo del mensaje
+          textColor: Colors.white, // El color del texto del mensaje
+          fontSize: 16.0 // El tamaño del texto del mensaje
+          );
+    }
   }
 
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
@@ -153,7 +223,7 @@ class _YoloCaptureV8Seg extends State<YoloCaptureV8Seg> {
               border: Border.all(color: Colors.pink, width: 2.0),
             ),
             child: Text(
-              "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
+              "${result['tag'] == "alparraco" ? "alcaparro" : result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
               style: TextStyle(
                 background: Paint()..color = colorPick,
                 color: Colors.white,
