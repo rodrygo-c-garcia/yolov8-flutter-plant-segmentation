@@ -9,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:screenshot/screenshot.dart';
 import '../screens/plants_list.dart';
+import 'package:plantnet_sucre/main.dart';
 
 class YoloCaptureV8Seg extends StatefulWidget {
   final FlutterVision vision;
