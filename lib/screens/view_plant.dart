@@ -70,7 +70,8 @@ class ViewPlantInfo extends State<ViewPlant> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ver planta'),
+        title: const Text('¿Como usar la Planta?'),
+        backgroundColor: Colors.green,
       ),
       body: Center(
         child: Padding(
@@ -86,45 +87,57 @@ class ViewPlantInfo extends State<ViewPlant> {
                   // Muestra la imagen capturada usando Image.memory dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.memory(
-                        fit: BoxFit.contain,
-                        alignment: Alignment
-                            .topCenter, // Alinea la imagen dentro del FittedBox
-                        widget.image,
-                        width: MediaQuery.of(context).size.width *
-                            0.9, // Especifica el ancho de la imagen en píxeles
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.memory(
+                          fit: BoxFit.contain,
+                          alignment: Alignment
+                              .topCenter, // Alinea la imagen dentro del FittedBox
+                          widget.image,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   // Muestra la primera imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.asset(
-                        imageUrl1, // La URL de la primera imagen adicional
-                        fit: BoxFit.contain,
-                        alignment: Alignment
-                            .topCenter, // Alinea la imagen dentro del FittedBox
-                        // Usa el argumento loadingBuilder para mostrar un widget mientras la imagen se carga
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.asset(
+                          imageUrl1, // La URL de la primera imagen adicional
+                          fit: BoxFit.contain,
+                          alignment: Alignment.topCenter,
+                          // Usa el argumento loadingBuilder para mostrar un widget mientras la imagen se carga
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   // Muestra la segunda imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
-                      child: Image.asset(
-                        fit: BoxFit.contain,
-                        alignment: Alignment
-                            .topCenter, // Alinea la imagen dentro del FittedBox
-                        imageUrl2, // La URL de la segunda imagen adicional
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.asset(
+                          fit: BoxFit.contain,
+                          alignment: Alignment
+                              .topCenter, // Alinea la imagen dentro del FittedBox
+                          imageUrl2, // La URL de la segunda imagen adicional
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              Text(
-                service.planta,
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  service.planta.toUpperCase(),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
               // Muestra la descripción de la planta usando service.descripcion
               Expanded(
