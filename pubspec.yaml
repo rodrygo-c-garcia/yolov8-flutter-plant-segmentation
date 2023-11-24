@@ -45,6 +45,7 @@ dependencies:
   image_cropper: ^5.0.0
   fluttertoast: ^8.2.4
   image: ^4.1.3
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
