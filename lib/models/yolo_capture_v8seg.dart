@@ -77,7 +77,7 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
   void didPushNext() {
     // Se llama cuando se abre la pantalla siguiente y se sale de esta pantalla
     // Aquí puedes detener la detección de plantas
-    isDetected = true;
+    //isDetected = true;
   }
 
   @override
@@ -157,6 +157,7 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
     if (photo != null) {
       setState(() {
         imageFile = File(photo.path);
+        isDetected = true;
       });
     }
   }
@@ -184,7 +185,6 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
         EasyLoading.showSuccess('Identificado!');
         setState(() {
           yoloResults = result;
-          isDetected = false;
         });
         tags =
             yoloResults.map((result) => result['tag']).toList().cast<String>();
