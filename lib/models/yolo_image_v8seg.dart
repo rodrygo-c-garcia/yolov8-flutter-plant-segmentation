@@ -27,6 +27,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   int imageWidth = 1;
   bool isLoaded = false;
   List<String> tags = [];
+  bool isDetected = false;
 
   @override
   void initState() {
