@@ -92,14 +92,20 @@ class ViewDetailPlant extends State<DetailPlant> {
                 // Usa la clase EdgeInsets para crear un relleno simétrico horizontal y vertical
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                child: Image.asset(imageUrl1, width: 100, height: 250),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.asset(imageUrl1, width: 100, height: 250),
+                ),
               ),
               // Usa el widget Padding para agregar un relleno personalizado alrededor de la segunda imagen
               Padding(
                 // Usa la clase EdgeInsets para crear un relleno simétrico horizontal y vertical
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                child: Image.asset(imageUrl2, width: 100, height: 250),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.asset(imageUrl2, width: 100, height: 250),
+                ),
               ),
             ],
           ),
