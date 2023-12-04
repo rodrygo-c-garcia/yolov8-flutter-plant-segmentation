@@ -73,6 +73,12 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/eucalipto/
+    - assets/images/alparraco/
+    - assets/images/jengibre/
+    - assets/images/malva/
+    - assets/images/manzanilla/
+    - assets/images/menta/
+    - assets/images/siempreviva/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
