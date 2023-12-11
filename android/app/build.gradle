@@ -23,6 +23,17 @@ if (flutterVersionName == null) {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('key.jks')
+            storePassword 'password'
+            keyAlias 'key'
+            keyPassword 'password'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     aaptOptions {
             noCompress 'tflite'
             noCompress 'lite'
