@@ -1,6 +1,6 @@
-# plantnet_sucre
+# PlantNet Sucre
 
-A new Flutter project.
+An application that implements a YoloV8 Computer Vision model for the segmentation of static and real time images of medicinal plants in the city of Sucre, Bolivia.
 
 ## Getting Started
 
