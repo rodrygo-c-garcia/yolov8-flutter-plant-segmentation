@@ -9,6 +9,8 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 - Search for medicinal plants to treat specific ailments by entering the name of the ailment and activating the camera to search for the plant in real time.
 - It uses `Yolov8`, a state-of-the-art model for image segmentation, which allows you to recognize medicinal plants.
 
+<img src=“https://i.ibb.co/QXGh10n/Screenshot-20231129-145608.jpg” style=“width:300px; height:200px” />
+
 ![](https://i.ibb.co/QXGh10n/Screenshot-20231129-145608.jpg)
 ![](https://i.ibb.co/VxCnFq2/Screenshot-20231129-145616.jpg)
 ![](https://i.ibb.co/f0w9kt9/Screenshot-20231129-145628.jpg)
