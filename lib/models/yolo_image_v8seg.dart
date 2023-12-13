@@ -61,7 +61,15 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          imageFile != null ? Image.file(imageFile!) : const SizedBox(),
+          imageFile != null
+              ? Image.file(imageFile!)
+              : SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Image.asset(
+                    'assets/images/OIG2.jpeg',
+                  ),
+                ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(
@@ -104,10 +112,10 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
   Future<void> loadYoloModel() async {
     await widget.vision.loadYoloModel(
         labels: 'assets/labels.txt',
-        modelPath: 'assets/best640_float32.tflite',
+        modelPath: 'assets/yolov8LONGV2/longV2_21_640.tflite',
         modelVersion: "yolov8seg",
         quantization: false,
-        numThreads: 6,
+        numThreads: 4,
         useGpu: true);
     setState(() {
       isLoaded = true;
@@ -145,6 +153,7 @@ class _YoloImageV8SegState extends State<YoloImageV8Seg> with RouteAware {
           iouThreshold: 0.8,
           confThreshold: 0.4,
           classThreshold: 0.5);
+
       if (result.isNotEmpty) {
         EasyLoading.showSuccess('Identificado!');
         setState(() {

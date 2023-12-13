@@ -61,7 +61,15 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          imageFile != null ? Image.file(imageFile!) : const SizedBox(),
+          imageFile != null
+              ? Image.file(imageFile!)
+              : SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Image.asset(
+                    'assets/images/OIG.jpeg',
+                  ),
+                ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(
@@ -69,7 +77,7 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
               children: [
                 TextButton(
                   onPressed: pickImage,
-                  child: const Text("Capturar imagen"),
+                  child: const Text("Tomar foto"),
                 ),
                 const SizedBox(
                   width: 10,
@@ -104,7 +112,7 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
   Future<void> loadYoloModel() async {
     await widget.vision.loadYoloModel(
         labels: 'assets/labels.txt',
-        modelPath: 'assets/best640_float32.tflite',
+        modelPath: 'assets/yolov8LONGV2/longV2_21_640.tflite',
         modelVersion: "yolov8seg",
         quantization: false,
         numThreads: 6,
@@ -149,6 +157,7 @@ class _YoloV8CaptureSegState extends State<YoloCaptureV8Seg> with RouteAware {
         EasyLoading.showSuccess('Identificado!');
         setState(() {
           yoloResults = result;
+          isDetected = false;
         });
         tags =
             yoloResults.map((result) => result['tag']).toList().cast<String>();

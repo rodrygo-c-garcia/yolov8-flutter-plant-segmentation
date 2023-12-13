@@ -12,7 +12,7 @@ class ServicioPlanta {
   }
 
   // Crear los atributos que quieres usar como variables globales
-  String planta = "", descripcion = "";
+  String planta = "", dolencia = "";
 
   // Crear la lista de objetos DolenciaPlanta
   List<DolenciaPlanta> lista = [];

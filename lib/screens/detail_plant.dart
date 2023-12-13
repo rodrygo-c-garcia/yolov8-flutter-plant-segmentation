@@ -26,23 +26,23 @@ class ViewDetailPlant extends State<DetailPlant> {
   @override
   Widget build(BuildContext context) {
     switch (widget.tag) {
-      case "apacarro":
+      case "alcaparro":
         imageUrl1 =
-            'assets/images/apacarro/apacarro1.jpg'; // La ruta de la primera imagen local para apacarro
+            'assets/images/alparraco/alparraco1.jpeg'; // La ruta de la primera imagen local para apacarro
         imageUrl2 =
-            'assets/images/apacarro/apacarro2.jpg'; // La ruta de la segunda imagen local para apacarro
+            'assets/images/alparraco/alparraco2.jpeg'; // La ruta de la segunda imagen local para apacarro
         break;
       case "jengibre":
         imageUrl1 =
-            'assets/images/jengibre/jengibre1.jpg'; // La ruta de la primera imagen local para jengibre
+            'assets/images/jengibre/jengibre1.jpeg'; // La ruta de la primera imagen local para jengibre
         imageUrl2 =
-            'assets/images/jengibre/jengibre2.jpg'; // La ruta de la segunda imagen local para jengibre
+            'assets/images/jengibre/jengibre2.jpeg'; // La ruta de la segunda imagen local para jengibre
         break;
-      case "menta":
+      case "menta_silvestre":
         imageUrl1 =
-            'assets/images/menta/menta1.jpg'; // La ruta de la primera imagen local para menta
+            'assets/images/menta/menta1.jpeg'; // La ruta de la primera imagen local para menta
         imageUrl2 =
-            'assets/images/menta/menta2.jpg'; // La ruta de la segunda imagen local para menta
+            'assets/images/menta/menta2.jpeg'; // La ruta de la segunda imagen local para menta
         break;
       case "eucalipto":
         imageUrl1 =
@@ -52,21 +52,21 @@ class ViewDetailPlant extends State<DetailPlant> {
         break;
       case "malva":
         imageUrl1 =
-            'assets/images/malva/malva1.jpg'; // La ruta de la primera imagen local para malva
+            'assets/images/malva/malva1.jpeg'; // La ruta de la primera imagen local para malva
         imageUrl2 =
-            'assets/images/malva/malva2.jpg'; // La ruta de la segunda imagen local para malva
+            'assets/images/malva/malva2.jpeg'; // La ruta de la segunda imagen local para malva
         break;
       case "manzanilla":
         imageUrl1 =
-            'assets/images/manzanilla/manzanilla1.jpg'; // La ruta de la primera imagen local para manzanilla
+            'assets/images/manzanilla/manzanilla1.jpeg'; // La ruta de la primera imagen local para manzanilla
         imageUrl2 =
-            'assets/images/manzanilla/manzanilla2.jpg'; // La ruta de la segunda imagen local para manzanilla
+            'assets/images/manzanilla/manzanilla2.jpeg'; // La ruta de la segunda imagen local para manzanilla
         break;
       case "siempreviva":
         imageUrl1 =
-            'assets/images/siempreviva/siempreviva1.jpg'; // La ruta de la primera imagen local para siempreviva
+            'assets/images/siempreviva/siempreviva1.jpeg'; // La ruta de la primera imagen local para siempreviva
         imageUrl2 =
-            'assets/images/siempreviva/siempreviva2.jpg'; // La ruta de la segunda imagen local para siempreviva
+            'assets/images/siempreviva/siempreviva2.jpeg'; // La ruta de la segunda imagen local para siempreviva
         break;
       default:
         imageUrl1 = ""; // La ruta por defecto para la primera imagen local
@@ -77,6 +77,7 @@ class ViewDetailPlant extends State<DetailPlant> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Informacion de ${widget.tag}"),
+        backgroundColor: Colors.green,
       ),
       // Usa un widget FutureBuilder para mostrar el contenido según el estado de la petición
       body: Column(
@@ -94,7 +95,7 @@ class ViewDetailPlant extends State<DetailPlant> {
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: Image.asset(imageUrl1, width: 100, height: 250),
+                  child: Image.asset(imageUrl1, width: 150, height: 300),
                 ),
               ),
               // Usa el widget Padding para agregar un relleno personalizado alrededor de la segunda imagen
@@ -104,7 +105,7 @@ class ViewDetailPlant extends State<DetailPlant> {
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: Image.asset(imageUrl2, width: 100, height: 250),
+                  child: Image.asset(imageUrl2, width: 150, height: 300),
                 ),
               ),
             ],
@@ -161,6 +162,7 @@ class ViewDetailPlant extends State<DetailPlant> {
                               fontSize: 16,
                             ),
                           ),
+
                           // Muestra las propiedades medicinales de la planta
                           const Text(
                             'Propiedades medicinales:',

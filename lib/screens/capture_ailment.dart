@@ -120,22 +120,10 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
                   // Obtener la dolencia del campo de texto
                   final dolencia = controller.text;
                   // Buscar la planta que corresponde a la dolencia
-                  final plantaDescripcion =
-                      buscarPlanta(dolencia, service.lista);
-                  if (plantaDescripcion == null) {
-                    descripcion = "";
-                  } else {
-                    final partes = plantaDescripcion.split("-");
-                    planta = partes[0];
-                    descripcion = partes[1];
-                  }
-                  // Actualizar el estado con la planta
-                  setState(() {
-                    service.planta = planta;
-                    service.descripcion = descripcion;
-                  });
-                  // Verificar si la descripción es vacía o no
-                  if (descripcion != "") {
+                  bool plantDolencia = buscarPlanta(dolencia, service.lista);
+
+                  // Verificar si la varible es verdader, es decir se encontro la planta
+                  if (plantDolencia) {
                     // Mostrar una ventana emergente con un mensaje
                     showDialog(
                       context: context,
@@ -254,27 +242,29 @@ class CaptureAilmentPlant extends State<CaptureAilment> {
       ),
     );
   }
-}
 
-String limpiarTexto(String texto) {
-  return texto.replaceAll(RegExp(r'[^\w\s]'), '');
-}
-
-String? buscarPlanta(String dolencia, List<DolenciaPlanta> lista) {
-  dolencia = limpiarTexto(dolencia.toLowerCase());
-  List<String> palabras = dolencia.split(' ');
-
-  // Recorrer la lista de objetos DolenciaPlanta
-  for (var palabra in palabras) {
-    for (var dolenciaPlanta in lista) {
-      // Comparar cada palabra con la dolencia del objeto
-      if (dolenciaPlanta.dolencia == palabra) {
-        // Devolver la planta del objeto
-        return dolenciaPlanta.planta;
-      }
-    }
+  String limpiarTexto(String texto) {
+    return texto.replaceAll(RegExp(r'[^\w\s]'), '');
   }
 
-  // Si no se encuentra ninguna planta, devolver un mensaje de error
-  return null;
+  bool buscarPlanta(String dolencia, List<DolenciaPlanta> lista) {
+    dolencia = limpiarTexto(dolencia.toLowerCase());
+    List<String> palabras = dolencia.split(' ');
+
+    // Recorrer la lista de objetos DolenciaPlanta
+    for (var palabra in palabras) {
+      for (var dolenciaPlanta in lista) {
+        // Comparar cada palabra con la dolencia del objeto
+        if (dolenciaPlanta.dolencia == palabra) {
+          // Devolver la planta del objeto
+          service.planta = dolenciaPlanta.planta;
+          service.dolencia = dolenciaPlanta.dolencia;
+          return true;
+        }
+      }
+    }
+
+    // Si no se encuentra ninguna planta, devolver un mensaje de error
+    return false;
+  }
 }

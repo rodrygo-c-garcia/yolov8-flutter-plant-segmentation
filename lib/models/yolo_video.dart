@@ -50,7 +50,9 @@ veryHigh: 1080p (1920x1080)
 ultraHigh: 2160p (3840x2160)
 max: La máxima resolución disponible para la cámara
 */
+
   // inicia el modelo y las camaras
+
   init() async {
     cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.medium);
@@ -124,6 +126,7 @@ max: La máxima resolución disponible para la cámara
         ),
       );
     }
+
     // retornamos un Sreenshot
     return Screenshot(
       // Envuelve el widget Stack con el widget Screenshot
@@ -180,9 +183,9 @@ max: La máxima resolución disponible para la cámara
   Future<void> loadYoloModel() async {
     await widget.vision.loadYoloModel(
         labels: 'assets/labels.txt',
-        modelPath: 'assets/best224_float32.tflite',
+        modelPath: 'assets/yolov8LONGV2/longV2_21_320INT.tflite',
         modelVersion: "yolov8seg",
-        numThreads: 4,
+        numThreads: 3,
         useGpu: true);
     setState(() {
       isLoaded = true;
@@ -193,13 +196,14 @@ max: La máxima resolución disponible para la cámara
       CameraImage cameraImage, NavigatorState navigator) async {
     imageHeight = cameraImage.height;
     imageWidth = cameraImage.width;
+
     final result = await widget.vision.yoloOnFrame(
         bytesList: cameraImage.planes.map((plane) => plane.bytes).toList(),
         imageHeight: cameraImage.height,
         imageWidth: cameraImage.width,
-        iouThreshold: 0.4,
+        iouThreshold: 0.8,
         confThreshold: 0.4,
-        classThreshold: 0.5);
+        classThreshold: 0.7);
     if (result.isNotEmpty) {
       setState(() {
         yoloResults = result;
@@ -275,6 +279,7 @@ max: La máxima resolución disponible para la cámara
   // cajas y poligonos
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen, String planta) {
     if (yoloResults.isEmpty) return [];
+    if (!tags.contains(service.planta)) return [];
 
     // //double factorX = screen.width / (imageWidth);/
     double factorX = screen.width / (cameraImage?.height ?? 1);
