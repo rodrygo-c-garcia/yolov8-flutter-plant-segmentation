@@ -1,4 +1,4 @@
-package com.example.plantnet_sucre
+package com.plantnet
 
 import io.flutter.embedding.android.FlutterActivity
 
