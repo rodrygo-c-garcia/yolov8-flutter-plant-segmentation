@@ -19,15 +19,11 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 - The model was validated with an independent data set, obtaining an average accuracy of 85%.
 - The model was tested with static and real time images, demonstrating its ability to identify and segment medicinal plants.
 
-## Getting Started
+#### Dataset
+[Medicinal Plants](https://www.kaggle.com/datasets/rodrigocolque/medicinal-plants-15 "Medicinal Plants") Data in kaggle with 85000 images, YoloV8 format, to consume using its API KEY for subsequent download with the command.
+`kaggle datasets download -d rodrigocolque/medicinal-plants-15`
 
-This project is a starting point for a Flutter application.
+Dataset set in Roboflow [medicinal plants](https://universe.roboflow.com/segmentacion-iwaek/medicinal_plants "medicinal plants") has 7 classes, each class with more than 1500 segmented images. 
 
-A few resources to get you started if this is your first Flutter project:
+###### Consultation with Ultralitycs for YoloV8 integration and Futter instance segmentation [issue #6890](https://github.com/ultralytics/ultralytics/issues/6890?notification_referrer_id=NT_kwDOApDDWLM4NzA4OTc0Nzk5OjQzMDQxNjI0 "issue #6890")
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
