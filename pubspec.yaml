@@ -46,6 +46,7 @@ dependencies:
   fluttertoast: ^8.2.4
   image: ^4.1.3
   http: ^1.1.0
+  change_app_package_name: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,12 @@ flutter:
   # assets:
   assets:
     - assets/
+    - assets/yolov8NANO85/nano640.tflite
+    - assets/yolov8NANO85/nano320.tflite
+    - assets/yoloLONG85/yolov8_LONG85_640.tflite
+    - assets/yoloLONG85/yolov8_LONG85_320.tflite
+    - assets/yolov8LONGV2/longV2_21_640.tflite
+    - assets/yolov8LONGV2/longV2_21_320INT.tflite
     - assets/images/
     - assets/images/eucalipto/
     - assets/images/alparraco/
