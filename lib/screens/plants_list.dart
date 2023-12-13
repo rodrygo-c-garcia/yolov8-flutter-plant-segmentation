@@ -21,6 +21,7 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ver planta'),
+        backgroundColor: Colors.green,
       ),
       body: Center(
         child: Padding(
@@ -33,7 +34,6 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
             children: [
               Row(
                 children: [
-                  // Muestra la imagen capturada usando Image.memory dentro de un Expanded y un FittedBox
                   Expanded(
                     child: FittedBox(
                       child: ClipRect(
@@ -54,7 +54,6 @@ class _PlantsListState extends State<PlantsList> with RouteAware {
                       ),
                     ),
                   ),
-
                   // Muestra la primera imagen adicional usando Image.network dentro de un Expanded y un FittedBox
                 ],
               ),
