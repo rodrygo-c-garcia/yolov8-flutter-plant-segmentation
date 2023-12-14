@@ -13,6 +13,12 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 <img align="center" width=270px height=600px alt="side_sticker" src="https://i.ibb.co/VxCnFq2/Screenshot-20231129-145616.jpg" />
 <img align="rigth" width=270px height=600px alt="side_sticker" src="https://i.ibb.co/f0w9kt9/Screenshot-20231129-145628.jpg" />
 
+
+https://github.com/rodrygo-c-garcia/yolov8-flutter-plant-segmentation/assets/43041624/a23a6ea8-a52c-4a84-a9ae-2b788f81a3da
+
+
+
+
 ##### Model YoloV8l-seg
 <table>
 <thead>
