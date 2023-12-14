@@ -80,6 +80,20 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 - The model was validated with an independent data set, obtaining an average accuracy of 85%.
 - The model was tested with static and real time images, demonstrating its ability to identify and segment medicinal plants.
 
+#### Results train Model
+
+##### Results metrics
+<img align="left" width=1000px height=400px alt="side_sticker" src="https://i.ibb.co/GtMBDFW/Screenshot-20231211-173646.png" />
+
+
+##### Results
+<img align="left" width=1000px height=250px alt="side_sticker" src="https://i.ibb.co/GFd8DGG/results.png" />
+
+
+#### Confusion Matrix
+<img align="left" width=500px height=450px alt="side_sticker" src="https://i.ibb.co/Y81bR61/confusion-matrix.png" />
+
+
 #### Dataset
 [Medicinal Plants](https://www.kaggle.com/datasets/rodrigocolque/medicinal-plants-15 "Medicinal Plants") Data in kaggle with 85000 images, YoloV8 format, to consume using its API KEY for subsequent download with the command.
 `kaggle datasets download -d rodrigocolque/medicinal-plants-15`
@@ -87,4 +101,5 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 Dataset set in Roboflow [medicinal plants](https://universe.roboflow.com/segmentacion-iwaek/medicinal_plants "medicinal plants") has 7 classes, each class with more than 1500 segmented images. 
 
 ###### Consultation with Ultralitycs for YoloV8 integration and Futter instance segmentation [issue #6890](https://github.com/ultralytics/ultralytics/issues/6890?notification_referrer_id=NT_kwDOApDDWLM4NzA4OTc0Nzk5OjQzMDQxNjI0 "issue #6890")
+
 
