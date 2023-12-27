@@ -1,6 +1,6 @@
 ## PlantNet Sucre
 
-An application that implements a [YoloV8](https://github.com/ultralytics/ultralytics "YoloV8") `Computer Vision` model for the segmentation of static and real time images of medicinal plants in the city of Sucre, Bolivia.
+An application that implements a [YoloV8](https://github.com/ultralytics/ultralytics "YoloV8") `Computer Vision` model for the segmentation of static and real time images of medicinal plants in the city of Sucre - Bolivia.
 
 ##### Functionality
 
