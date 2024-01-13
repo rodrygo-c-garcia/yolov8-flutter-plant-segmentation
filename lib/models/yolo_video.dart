@@ -217,7 +217,8 @@ max: La máxima resolución disponible para la cámara
         // Muestra un mensaje emergente con el texto "Enfoca esta planta $tagPlanta"
         isCaptured = true;
         Fluttertoast.showToast(
-            msg: "Enfoca la planta ${service.planta}",
+            msg:
+                "Enfoca la planta ${service.planta == "menta_silvestre" ? "Menta Silvestre" : service.planta}",
             toastLength: Toast.LENGTH_LONG, // La duración del mensaje
             gravity: ToastGravity.TOP, // La posición del mensaje
             timeInSecForIosWeb: 5, // El tiempo que se muestra el mensaje en iOS
