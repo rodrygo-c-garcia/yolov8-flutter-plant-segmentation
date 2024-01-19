@@ -16,6 +16,10 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 
 https://github.com/rodrygo-c-garcia/yolov8-flutter-plant-segmentation/assets/43041624/a23a6ea8-a52c-4a84-a9ae-2b788f81a3da
 
+https://github.com/rodrygo-c-garcia/yolov8-flutter-plant-segmentation/assets/43041624/2b208196-b165-4246-a44c-0bfeed9e49c2
+
+
+
 
 
 
