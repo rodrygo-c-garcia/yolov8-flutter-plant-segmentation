@@ -8,6 +8,7 @@ An application that implements a [YoloV8](https://github.com/ultralytics/ultraly
 - Obtain valuable information about the detected plants, such as their scientific name, properties, medicinal uses and how they are prepared.
 - Search for medicinal plants to treat specific ailments by entering the name of the ailment and activating the camera to search for the plant in real time.
 - It uses `Yolov8`, a state-of-the-art model for image segmentation, which allows you to recognize medicinal plants.
+- For real-time segmentation, a cell phone with a Helio G35 processor was used.
   
 <img align="left" width=270px height=600px alt="side_sticker" src="https://i.ibb.co/QXGh10n/Screenshot-20231129-145608.jpg" />
 <img align="center" width=270px height=600px alt="side_sticker" src="https://i.ibb.co/VxCnFq2/Screenshot-20231129-145616.jpg" />
